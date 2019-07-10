@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Game24</string>
+    <string name="start_game">Start Game</string>
+    <string name="player_1s_name">Player 1:</string>
+    <string name="player_2s_name">Player 2:</string>
+    <string name="enter_name_1">Enter a name for Player 1</string>
+    <string name="enter_name_2">Enter a name for Player 2</string>
+    <string name="game_24">24 Game</string>
 </resources>
