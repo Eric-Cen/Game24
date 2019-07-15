@@ -42,7 +42,7 @@
             android:rotation="180"
             app:layout_constraintEnd_toEndOf="@+id/tv_player2_cards"
             app:layout_constraintTop_toBottomOf="@+id/tv_player2_cards"/>
-    <LinearLayout
+    <com.mcarving.game24.cards.CardView
             android:id="@+id/view1"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -50,7 +50,7 @@
             app:layout_constraintEnd_toStartOf="@+id/view2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-    <View
+    <com.mcarving.game24.cards.CardView
             android:id="@+id/view2"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -58,7 +58,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view1"
             app:layout_constraintEnd_toStartOf="@+id/view3"/>
-    <View
+    <com.mcarving.game24.cards.CardView
             android:id="@+id/view3"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -66,7 +66,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view2"
             app:layout_constraintEnd_toStartOf="@+id/view4"/>
-    <View
+    <com.mcarving.game24.cards.CardView
             android:id="@+id/view4"
             android:layout_width="80dp"
             android:layout_height="80dp"

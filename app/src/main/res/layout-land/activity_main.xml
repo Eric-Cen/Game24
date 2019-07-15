@@ -30,7 +30,8 @@
               android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 
     />
-    <EditText android:layout_width="0dp"
+    <com.mcarving.game24.EditTextWithClear
+            android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:id="@+id/edit_name1"
               app:layout_constraintStart_toStartOf="@+id/tv_name_label_1"
@@ -50,7 +51,8 @@
               android:textAppearance="@style/TextAppearance.AppCompat.Medium"
     />
 
-    <EditText android:layout_width="0dp"
+    <com.mcarving.game24.EditTextWithClear
+            android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:id="@+id/edit_name2"
               app:layout_constraintStart_toStartOf="@+id/tv_name_label_2"

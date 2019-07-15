@@ -19,13 +19,18 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
 
+    private lateinit var editTextOne : EditTextWithClear
+    private lateinit var editTextTWo : EditTextWithClear
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        editTextOne = findViewById(R.id.edit_name1)
+        editTextTWo = findViewById(R.id.edit_name2)
         
         btn_play.setOnClickListener {
             val (playerOneName, playerTwoName) = getPlayerNames()
-            Log.d(TAG, "onCreate: playerOne = $playerOneName \nplayerTwo = $playerTwoName")
 
             // start GameActivity
             val intent = Intent(this, GameActivity::class.java).apply {
@@ -39,9 +44,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getPlayerNames() : Pair<String, String>{
-
-        val  nameOne = if(edit_name1.text.isNullOrBlank()) "Player 1" else edit_name1.text.toString().trim()
-        val nameTwo = if(edit_name2.text.isNullOrBlank()) "Player 2" else edit_name2.text.toString().trim()
+        val  nameOne = if(editTextOne.text.isNullOrBlank()) "Player 1"
+                                else editTextOne.text.toString().trim()
+        val nameTwo = if(editTextTWo.text.isNullOrBlank()) "Player 2"
+                                else editTextTWo.text.toString().trim()
 
         return Pair(nameOne, nameTwo)
     }
