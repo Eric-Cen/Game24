@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_player2_cards"
-            tools:text="Cards in hand: 20"
+            android:text="Cards in hand: 20"
             android:rotation="180"
             app:layout_constraintEnd_toEndOf="@+id/btn_pass2"
             app:layout_constraintTop_toBottomOf="@+id/btn_pass2"
@@ -50,6 +50,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/view2"
             android:background="@color/colorPrimaryDark"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginEnd="16dp"
 
     />
     <com.mcarving.game24.cards.CardView
@@ -60,7 +62,10 @@
             android:background="@color/colorPrimaryDark"
             app:layout_constraintStart_toEndOf="@+id/view1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"/>
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintHorizontal_chainStyle="packed"
+
+    />
     <android.support.constraint.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,14 +73,19 @@
             app:layout_constraintGuide_percent="0.5"
             android:orientation="horizontal"/>
     <com.mcarving.game24.cards.CardView
-        android:id="@+id/view3"
+            android:id="@+id/view3"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/view4"
-            app:layout_constraintTop_toBottomOf="@+id/guideline"/>
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginEnd="16dp"
+
+
+    />
     <com.mcarving.game24.cards.CardView
             android:id="@+id/view4"
             android:layout_width="80dp"
@@ -84,7 +94,11 @@
             android:background="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@+id/guideline"
             app:layout_constraintStart_toEndOf="@+id/view3"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintHorizontal_chainStyle="packed"
+
+    />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

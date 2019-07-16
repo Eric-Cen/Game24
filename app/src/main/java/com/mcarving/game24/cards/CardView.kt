@@ -1,7 +1,9 @@
 package com.mcarving.game24.cards
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +53,29 @@ class CardView : FrameLayout {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        val displayMetrics = DisplayMetrics()
+        (context as Activity).windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+
+        val height = displayMetrics.heightPixels
+        val width  = displayMetrics.widthPixels
+
+        var desiredWidth : Int
+        var desiredHeight : Int
+
+        if(height < width) { // in landscape mode
+            desiredWidth = width / 6
+            desiredHeight = desiredWidth * 7 / 5
+        } else { // in portrait mode
+            desiredWidth = width / 3
+            desiredHeight = desiredWidth * 7 / 5
+        }
+
+        setMeasuredDimension(desiredWidth, desiredHeight)
     }
+
 
     /**
      * Updates the view to represent the passed in card

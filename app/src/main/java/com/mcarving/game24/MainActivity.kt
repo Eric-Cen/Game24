@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    //TODO  look into compound view to display 4 cards
 
     //Game Activity
 
