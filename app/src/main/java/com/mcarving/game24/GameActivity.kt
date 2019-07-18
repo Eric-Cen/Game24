@@ -1,17 +1,21 @@
 package com.mcarving.game24
 
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.mcarving.game24.cards.Card
 import com.mcarving.game24.cards.CardView
 import kotlinx.android.synthetic.main.activity_game.*
 
 
 class GameActivity : AppCompatActivity() {
+    private lateinit var nameOne : String
 
+    private lateinit var nameTwo : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,14 +24,34 @@ class GameActivity : AppCompatActivity() {
         // remove app title bar
         supportActionBar?.apply { hide() }
 
-        val thisDisplay = this.windowManager.defaultDisplay
-        val desiredSize = Point()
-        thisDisplay.getSize(desiredSize)
-        val width = desiredSize.x
 
 
         setupPlayerNames()
         generateFourRandomCards()
+
+        btn_answer1.setOnClickListener {
+            startAnswerActivity(nameOne)
+        }
+
+        btn_answer2.setOnClickListener {
+
+            startAnswerActivity(nameTwo)
+
+        }
+
+        val viewModel = ViewModelProviders.of(this)
+            .get(GameViewModel::class.java)
+
+        viewModel.shuffleDeck()
+    }
+
+    fun startAnswerActivity(playerName: String){
+
+        val intent = Intent(this, AnswerActivity::class.java).apply {
+            putExtra(AnswerActivity.EXTRA_PLAYER_NAME, playerName)
+        }
+
+        startActivity(intent)
 
     }
 
@@ -49,8 +73,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun setupPlayerNames(){
-        val nameOne = intent.getStringExtra(EXTRA_PLAYER_ONE)
-        val nameTwo = intent.getStringExtra(EXTRA_PLAYER_TWO)
+        nameOne = intent.getStringExtra(EXTRA_PLAYER_ONE)
+        nameTwo = intent.getStringExtra(EXTRA_PLAYER_TWO)
         tv_player_one.text = nameOne
         tv_player_two.text = nameTwo
     }
