@@ -6,4 +6,5 @@
     <string name="enter_name_1">Enter a name for Player 1</string>
     <string name="enter_name_2">Enter a name for Player 2</string>
     <string name="game_24">24 Game</string>
+    <string name="pass_status">Pass 0/2</string>
 </resources>
