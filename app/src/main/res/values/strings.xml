@@ -7,4 +7,7 @@
     <string name="enter_name_2">Enter a name for Player 2</string>
     <string name="game_24">24 Game</string>
     <string name="pass_status">Pass 0/2</string>
+    <string name="seconds">%d seconds remaining</string>
+    <string name="second">%d second remaining</string>
+    <string name="time_out">%d second timeout!</string>
 </resources>

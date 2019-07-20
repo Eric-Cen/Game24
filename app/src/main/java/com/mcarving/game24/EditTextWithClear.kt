@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.res.ResourcesCompat
 
 class EditTextWithClear : AppCompatEditText{
-    private var mClearButtonImage : Drawable?
+    private var _clearButtonImage : Drawable?
 
     constructor(context : Context) : super(context)
 
@@ -23,7 +23,7 @@ class EditTextWithClear : AppCompatEditText{
 
 
     init {
-        mClearButtonImage = ResourcesCompat.getDrawable(resources,
+        _clearButtonImage = ResourcesCompat.getDrawable(resources,
             R.drawable.ic_clear_black_24dp, null)
 
         addTextChangedListener(object : TextWatcher{
@@ -49,7 +49,7 @@ class EditTextWithClear : AppCompatEditText{
                 // Detect the touch in RTL or LTR layout direction
                 if(layoutDirection == View.LAYOUT_DIRECTION_RTL) {
                     // if RTL, get the end of the button on the left side
-                    mClearButtonImage?.apply{
+                    _clearButtonImage?.apply{
                         clearButtonEnd = intrinsicWidth + paddingStart
                     }
 
@@ -59,7 +59,7 @@ class EditTextWithClear : AppCompatEditText{
                 } else {
                     // Layout is LTR
                     // Get the start of the button on the right side
-                    mClearButtonImage?.apply {
+                    _clearButtonImage?.apply {
                         clearButtonStart = (width - paddingEnd - intrinsicWidth)
                     }
                     // If the touch occurred after the start of the button,
@@ -75,7 +75,7 @@ class EditTextWithClear : AppCompatEditText{
                     // Check for ACTION_DOWN (always occurs before ACTION_UP).
                     if(event.action == MotionEvent.ACTION_DOWN){
                         // Switch to the black version of clear button.
-                        mClearButtonImage = ResourcesCompat.getDrawable(resources,
+                        _clearButtonImage = ResourcesCompat.getDrawable(resources,
                             R.drawable.ic_clear_black_24dp, null)
                         showClearButton()
                     }
@@ -83,7 +83,7 @@ class EditTextWithClear : AppCompatEditText{
                     // Check for ACTION_UP
                     if(event.action == MotionEvent.ACTION_UP){
                         // Switch to the opaque version of clear button
-                        mClearButtonImage = ResourcesCompat.getDrawable(resources,
+                        _clearButtonImage = ResourcesCompat.getDrawable(resources,
                             R.drawable.ic_clear_opaque_24dp,
                             null)
                         // Clear the text and hide the clear button.
@@ -111,7 +111,7 @@ class EditTextWithClear : AppCompatEditText{
         setCompoundDrawablesRelativeWithIntrinsicBounds(
             null, // Start of text
                 null, // Above text
-                    mClearButtonImage, // End of text
+                    _clearButtonImage, // End of text
                     null )// Below text
     }
 

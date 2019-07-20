@@ -1,31 +1,40 @@
 package com.mcarving.game24
 
+import android.os.SystemClock
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mcarving.game24.cards.Card
+import java.util.*
 import kotlin.random.Random
 
 class GameViewModel : ViewModel() {
     enum class Player {
         ONE, TWO
     }
+    val TAG = "GameViewModel"
 
     val player_one_pass = MutableLiveData<Boolean>()
     var player_two_pass = MutableLiveData<Boolean>()
 
     // list of poker cards for player 1
-    private lateinit var playerOneCards : MutableList<Card>
-    private var currentPointerOne = -1
+    private lateinit var _playerOneCards : MutableList<Card>
+    private var _currentPointerOne = -1
 
     // list of poker cards for player 2
-    private lateinit var playerTwoCards : MutableList<Card>
-    private var currentPointerTwo = -1
+    private lateinit var _playerTwoCards : MutableList<Card>
+    private var _currentPointerTwo = -1
+
+    private var _elapsedTime = MutableLiveData<Long>()
+
+    private lateinit var _timer : Timer
 
     init {
         player_one_pass.value = false
         player_two_pass.value = false
+
+        //_elapsedTime.value = THIRTY_SECONDS
 
         Log.d("CardViewModel", "shuffleDeck: ${Card.DECK.toString()}")
         // initial shuffle cards
@@ -41,8 +50,8 @@ class GameViewModel : ViewModel() {
         Log.d("CardViewModel", "shuffleDeck: ${b.toString()}")
         Log.d("CardViewModel", "shuffleDeck: ${b.size}")
 
-        playerOneCards = a.toMutableList()
-        playerTwoCards = b.toMutableList()
+        _playerOneCards = a.toMutableList()
+        _playerTwoCards = b.toMutableList()
 
         reshuffleCardsInHand()
     }
@@ -71,16 +80,16 @@ class GameViewModel : ViewModel() {
     }
 
     fun reshuffleCardsInHand(){
-        if(playerOneCards.size > 1){
-            playerOneCards = shuffleCards(playerOneCards)
-            Log.d("CardViewModel", "reshuffled player one: ${playerOneCards.toString()}")
+        if(_playerOneCards.size > 1){
+            _playerOneCards = shuffleCards(_playerOneCards)
+            Log.d("CardViewModel", "reshuffled player one: ${_playerOneCards.toString()}")
 
         }
 
-        if(playerTwoCards.size > 1){
+        if(_playerTwoCards.size > 1){
 
-            playerTwoCards = shuffleCards(playerTwoCards)
-            Log.d("CardViewModel", "reshuffled player Two: ${playerTwoCards.toString()}")
+            _playerTwoCards = shuffleCards(_playerTwoCards)
+            Log.d("CardViewModel", "reshuffled player Two: ${_playerTwoCards.toString()}")
 
 
         }
@@ -97,8 +106,8 @@ class GameViewModel : ViewModel() {
     fun addCards(addList : List<Card>, who : Player){
         for(card in addList){
             when(who){
-                Player.ONE -> playerOneCards.add(card)
-                Player.TWO -> playerTwoCards.add(card)
+                Player.ONE -> _playerOneCards.add(card)
+                Player.TWO -> _playerTwoCards.add(card)
             }
         }
     }
@@ -107,8 +116,8 @@ class GameViewModel : ViewModel() {
     fun removeCards(removeList : List<Card>, who : Player ){
         for (card in removeList){
             when(who){
-                Player.ONE -> playerOneCards.remove(card)
-                Player.TWO -> playerTwoCards.remove(card)
+                Player.ONE -> _playerOneCards.remove(card)
+                Player.TWO -> _playerTwoCards.remove(card)
             }
         }
 
@@ -130,37 +139,69 @@ class GameViewModel : ViewModel() {
 
     fun getCardSize(player: Player) : Int {
         when(player){
-            Player.ONE -> return playerOneCards.size
-            Player.TWO -> return playerTwoCards.size
+            Player.ONE -> return _playerOneCards.size
+            Player.TWO -> return _playerTwoCards.size
         }
     }
 
     fun getFourCards() : List<Card>{
 
-        if(currentPointerOne == (playerOneCards.size-1)){
-            playerOneCards = shuffleCards(playerOneCards)
-            currentPointerOne = -1
+        if(_currentPointerOne == (_playerOneCards.size-1)){
+            _playerOneCards = shuffleCards(_playerOneCards)
+            _currentPointerOne = -1
         }
 
-        if(currentPointerTwo == (playerTwoCards.size-1)){
-            playerTwoCards = shuffleCards(playerTwoCards)
-            currentPointerTwo = -1
+        if(_currentPointerTwo == (_playerTwoCards.size-1)){
+            _playerTwoCards = shuffleCards(_playerTwoCards)
+            _currentPointerTwo = -1
 
         }
         val tempList = MutableList<Card>(4){Card.DECK[0]}
-        if(playerOneCards.size >= 2 && playerTwoCards.size >= 2){
-            tempList[0] = playerOneCards[++currentPointerOne]
-            tempList[1] = playerOneCards[++currentPointerOne]
+        if(_playerOneCards.size >= 2 && _playerTwoCards.size >= 2){
+            tempList[0] = _playerOneCards[++_currentPointerOne]
+            tempList[1] = _playerOneCards[++_currentPointerOne]
 
-            tempList[2] = playerTwoCards[++currentPointerTwo]
-            tempList[3] = playerTwoCards[++currentPointerTwo]
-        } else if(playerOneCards.size < 2 && playerTwoCards.size >= 2){
+            tempList[2] = _playerTwoCards[++_currentPointerTwo]
+            tempList[3] = _playerTwoCards[++_currentPointerTwo]
+        } else if(_playerOneCards.size < 2 && _playerTwoCards.size >= 2){
 
-        } else if(playerOneCards.size >= 2 && playerTwoCards.size < 2){
+        } else if(_playerOneCards.size >= 2 && _playerTwoCards.size < 2){
 
         }
 
         return tempList
+    }
+
+    fun countDown30secs(){
+        var initialtime : Long = SystemClock.elapsedRealtime()
+
+        // should this run with coroutine?
+        _timer = Timer()
+        _timer.scheduleAtFixedRate(object : TimerTask(){
+            override fun run() {
+                val newValue = (SystemClock.elapsedRealtime() - initialtime) / 1000
+                _elapsedTime.postValue(THIRTY_SECONDS - newValue)
+
+                Log.d(TAG, "run: newValue = $newValue")
+                if(newValue >= 30){
+                    Log.d(TAG, "run: timer reach 30 seconds, it is cancelled")
+                    cancel()
+                }
+            }
+        }, ONE_SECOND, ONE_SECOND)
+    }
+
+    fun cancelTimer(){
+        _timer.cancel()
+    }
+
+    fun getElapsedTime() : LiveData<Long>{
+        return _elapsedTime
+    }
+
+    companion object {
+        val ONE_SECOND = 1000L
+        val THIRTY_SECONDS = 30L
     }
 
 }

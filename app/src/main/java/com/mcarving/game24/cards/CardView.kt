@@ -7,18 +7,16 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.mcarving.game24.R
-import java.util.jar.Attributes
 
 /** Inflates and populates a [View] representing a [Card] */
 class CardView : FrameLayout {
-    private lateinit var view : View
-    private lateinit var textSuite: TextView
-    private lateinit var textCorner1: TextView
-    private lateinit var textCorner2: TextView
+    private lateinit var _view : View
+    private lateinit var _textSuite: TextView
+    private lateinit var _textCorner1: TextView
+    private lateinit var _textCorner2: TextView
 
     constructor(context: Context) : super(context, null){
         init(context)
@@ -38,10 +36,10 @@ class CardView : FrameLayout {
     private fun init(context: Context){
 
         Log.d("CardView", "init: is in CardView init()")
-        view = LayoutInflater.from(context).inflate(R.layout.item_card_layout, this, true)
-        textSuite = view.findViewById(R.id.label_center)
-        textCorner1 = view.findViewById(R.id.label_top)
-        textCorner2 = view.findViewById(R.id.label_bottom)
+        _view = LayoutInflater.from(context).inflate(R.layout.item_card_layout, this, true)
+        _textSuite = _view.findViewById(R.id.label_center)
+        _textCorner1 = _view.findViewById(R.id.label_top)
+        _textCorner2 = _view.findViewById(R.id.label_bottom)
 
     }
 
@@ -78,14 +76,14 @@ class CardView : FrameLayout {
 
 
     /**
-     * Updates the view to represent the passed in card
+     * Updates the _view to represent the passed in card
      */
     fun bind(card: Card){
-        textSuite.text = card.suit
-        view.setBackgroundResource(R.color.blue_300)
+        _textSuite.text = card.suit
+        _view.setBackgroundResource(R.color.blue_300)
 
         val cornerLabel = card.cornerLabel
-        textCorner1.text = cornerLabel
-        textCorner2.text = cornerLabel
+        _textCorner1.text = cornerLabel
+        _textCorner2.text = cornerLabel
     }
 }
