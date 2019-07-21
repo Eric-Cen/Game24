@@ -10,9 +10,7 @@ import java.util.*
 import kotlin.random.Random
 
 class GameViewModel : ViewModel() {
-    enum class Player {
-        ONE, TWO
-    }
+
     val TAG = "GameViewModel"
 
     val player_one_pass = MutableLiveData<Boolean>()
