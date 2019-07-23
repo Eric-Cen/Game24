@@ -40,7 +40,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         btn_pass1.setOnClickListener {
-            viewModel.setupPassByPlayer(GameViewModel.Player.ONE, true)
+            viewModel.setupPassByPlayer(Player.ONE, true)
         }
 
         val playerOneObserver = Observer<Boolean> { player_one_passes ->
@@ -56,7 +56,7 @@ class GameActivity : AppCompatActivity() {
         viewModel.player_one_pass.observe(this, playerOneObserver)
 
         btn_pass2.setOnClickListener {
-            viewModel.setupPassByPlayer(GameViewModel.Player.TWO, true)
+            viewModel.setupPassByPlayer(Player.TWO, true)
         }
 
 
@@ -74,8 +74,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun updatePassButtonsStage(viewModel: GameViewModel) {
-        if (viewModel.getPassByPlayer(GameViewModel.Player.ONE) == true
-            && viewModel.getPassByPlayer(GameViewModel.Player.TWO) == true
+        if (viewModel.getPassByPlayer(Player.ONE) == true
+            && viewModel.getPassByPlayer(Player.TWO) == true
         ) {
             //setPassButtonText("2/2 Passes")
 
@@ -83,15 +83,15 @@ class GameActivity : AppCompatActivity() {
 
             setPassButtonText("0/2 Pass")
             hideTimerButtonText()
-            viewModel.setupPassByPlayer(GameViewModel.Player.ONE, false)
-            viewModel.setupPassByPlayer(GameViewModel.Player.TWO, false)
-        } else if (viewModel.getPassByPlayer(GameViewModel.Player.TWO) == true
-            || viewModel.getPassByPlayer(GameViewModel.Player.ONE) == true
+            viewModel.setupPassByPlayer(Player.ONE, false)
+            viewModel.setupPassByPlayer(Player.TWO, false)
+        } else if (viewModel.getPassByPlayer(Player.TWO) == true
+            || viewModel.getPassByPlayer(Player.ONE) == true
         ) {
             setPassButtonText("1/2 Pass")
             viewModel.countDown30secs()
 
-            if (viewModel.getPassByPlayer(GameViewModel.Player.ONE) == true){
+            if (viewModel.getPassByPlayer(Player.ONE) == true){
                 // setup timer for player two
                 tv_player2_timer?.visibility = View.VISIBLE
 
