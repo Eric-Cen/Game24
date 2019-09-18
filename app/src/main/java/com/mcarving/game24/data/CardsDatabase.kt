@@ -3,8 +3,10 @@ package com.mcarving.game24.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.mcarving.game24.Utils
+import com.mcarving.game24.util.Utils
 import com.mcarving.game24.cards.Card
+import com.mcarving.game24.data.source.local.ListConverter
+import com.mcarving.game24.data.source.local.PlayCardsDao
 import java.util.concurrent.Executors
 
 @Database(entities = arrayOf(PlayCards::class), version = 1)

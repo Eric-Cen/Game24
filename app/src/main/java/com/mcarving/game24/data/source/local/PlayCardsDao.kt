@@ -1,9 +1,10 @@
-package com.mcarving.game24.data
+package com.mcarving.game24.data.source.local
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.TypeConverters
 import com.mcarving.game24.cards.Card
+import com.mcarving.game24.data.PlayCards
 
 @Dao
 interface PlayCardsDao {

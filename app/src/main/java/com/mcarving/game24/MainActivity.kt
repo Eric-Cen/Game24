@@ -4,8 +4,9 @@ package com.mcarving.game24
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mcarving.game24.GameActivity.Companion.EXTRA_PLAYER_ONE
-import com.mcarving.game24.GameActivity.Companion.EXTRA_PLAYER_TWO
+import com.mcarving.game24.board.GameActivity
+import com.mcarving.game24.board.GameActivity.Companion.EXTRA_PLAYER_ONE
+import com.mcarving.game24.board.GameActivity.Companion.EXTRA_PLAYER_TWO
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

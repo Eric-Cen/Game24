@@ -1,10 +1,11 @@
-package com.mcarving.game24
+package com.mcarving.game24.board
 
 import android.os.SystemClock
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mcarving.game24.Player
 import com.mcarving.game24.cards.Card
 import java.util.*
 import kotlin.random.Random
@@ -111,7 +112,7 @@ class GameViewModel : ViewModel() {
     }
 
     // if the user wins, the user gives aways the two cards
-    fun removeCards(removeList : List<Card>, who : Player ){
+    fun removeCards(removeList : List<Card>, who : Player){
         for (card in removeList){
             when(who){
                 Player.ONE -> _playerOneCards.remove(card)
@@ -186,7 +187,10 @@ class GameViewModel : ViewModel() {
                     cancel()
                 }
             }
-        }, ONE_SECOND, ONE_SECOND)
+        },
+            ONE_SECOND,
+            ONE_SECOND
+        )
     }
 
     fun cancelTimer(){

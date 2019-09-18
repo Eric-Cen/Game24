@@ -14,8 +14,10 @@ data class PlayCards(
 
     var turn : Boolean = false,
 
+    // The selected two cards to play the 24 Card game
     var twoCards : MutableList<Card>,
 
+    // pointer index used to draw the new two cards
     var cardIndex : Int
 
     ) {

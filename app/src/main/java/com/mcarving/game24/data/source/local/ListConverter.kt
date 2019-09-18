@@ -1,4 +1,4 @@
-package com.mcarving.game24.data
+package com.mcarving.game24.data.source.local
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

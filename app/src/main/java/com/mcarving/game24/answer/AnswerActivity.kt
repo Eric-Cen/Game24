@@ -1,9 +1,9 @@
-package com.mcarving.game24
+package com.mcarving.game24.answer
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mcarving.game24.R
 import kotlinx.android.synthetic.main.activity_answer.*
-import kotlinx.android.synthetic.main.activity_game.*
 
 class AnswerActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.mcarving.game24
+package com.mcarving.game24.util
 
 import android.util.Log
 import com.mcarving.game24.cards.Card

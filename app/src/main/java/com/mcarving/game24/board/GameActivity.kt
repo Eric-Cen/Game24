@@ -1,4 +1,4 @@
-package com.mcarving.game24
+package com.mcarving.game24.board
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.mcarving.game24.Player
+import com.mcarving.game24.R
+import com.mcarving.game24.answer.AnswerActivity
 import com.mcarving.game24.cards.Card
 import kotlinx.android.synthetic.main.activity_game.*
 import java.lang.Exception
