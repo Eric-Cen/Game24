@@ -4,14 +4,12 @@ import android.util.Log
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.mcarving.game24.cards.Card
+import timber.log.Timber
 
 class ListConverter {
-    val TAG = "ListConverter"
-    
+
     @TypeConverter
     fun jsonToList(jsonText : String) : MutableList<Card>{
-
-
         val newList = mutableListOf<Card>()
         val stringList = Gson().fromJson(jsonText, Array<String>::class.java).asList()
 
@@ -23,6 +21,13 @@ class ListConverter {
                 newList.add(card)
             }
         }
+
+        //TODO to delete
+        val card1 = Card("♣", "1")
+        val card2 = Card("♣", "2")
+        newList.add(card1)
+        newList.add(card2)
+
 
         return newList
     }
@@ -37,7 +42,7 @@ class ListConverter {
 
         val jText = Gson().toJson(stringList)
 
-        Log.d(TAG, "listToJson: $jText")
+        Timber.d("listToJson: $jText")
         return jText
     }
 }

@@ -6,7 +6,7 @@ import android.os.Bundle
  *Poker card class
  */
 
-class Card private constructor(val suit: String, val value: String){
+class Card constructor(val suit: String, val value: String){
     val cornerLabel: String
         get() = value + "\n" + suit
 

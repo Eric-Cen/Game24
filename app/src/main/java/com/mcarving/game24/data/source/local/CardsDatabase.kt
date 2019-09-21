@@ -9,6 +9,7 @@ import androidx.room.TypeConverters
 import com.mcarving.game24.util.Utils
 import com.mcarving.game24.cards.Card
 import com.mcarving.game24.data.PlayCards
+import timber.log.Timber
 import java.util.concurrent.Executors
 
 @Database(entities = arrayOf(PlayCards::class), version = 1)
@@ -21,12 +22,16 @@ abstract class CardsDatabase : RoomDatabase(){
      *  Reset and populate cards in hand when the Play Game button is pressed
      */
     fun populateInitialData(){
-        val TAG = "CardsDatabase"
         Executors.newSingleThreadScheduledExecutor().execute {
-            val cards4Player1 = playCardDao().getCardsInHand(0)
-            val cards4Player2 = playCardDao().getCardsInHand(1)
+            var player1 = playCardDao().getPlayCards(PLAYERONE)
+            var player2 = playCardDao().getPlayCards(PLAYERTWO)
 
-            if(cards4Player1.isEmpty() && cards4Player2.isEmpty()) {
+
+            //TODO 9/21/2019 morning @10:30AM
+            // need to use insert() to add row to table
+            // then finish the database testing
+            // then go for the answer UI with drag and release feature
+            if(player1.cardsInHand.isEmpty() && player2.cardsInHand.isEmpty()) {
                 beginTransaction()
                 try {
                     // reset card data for the players
@@ -53,13 +58,17 @@ abstract class CardsDatabase : RoomDatabase(){
                     playCardDao().setTwoCards(PLAYERTWO, listOf(b[0], b[1]))
                     playCardDao().setSelectedCardInex(PLAYERTWO, 1)
 
+                    //retrive the new data
+                    player1 = playCardDao().getPlayCards(PLAYERONE)
+                    player2 = playCardDao().getPlayCards(PLAYERTWO)
+
                 } finally {
                     endTransaction()
                 }
-            } else {
-                Log.d(TAG, "populateInitialData: player1's card # = " + cards4Player1.size)
-                Log.d(TAG, "populateInitialData: player2's card # = " + cards4Player2.size)
-            }
+            } // else, do nothing since there is already data in there
+
+            Timber.d("populateInitialData: player1's card # = %d",  player1.cardsInHand.size)
+            Timber.d("populateInitialData: player2's card # = %d", player2.cardsInHand.size)
         }
     }
 

@@ -42,16 +42,18 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha02"
     implementation 'com.google.android.material:material:1.1.0-alpha06'
 
+    ext.retrofitVersion = "2.4.0"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
-    ext.retrofitVersion = "2.4.0"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     def junit_version = "4.12"
-    def espresso_version = "3.2.0"
+    def espresso_version = "3.2.0-beta01"
     def runner_version = "1.2.0"
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test:runner:$runner_version"
@@ -61,4 +63,20 @@ dependencies {
     def junit_ext_version = "1.1.1"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test.ext:junit-ktx:$junit_ext_version"
+
+    def mockitoVersion = '2.8.9'
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
+
+    // AndroidX Test - Instrumented testing
+    def androidXTestCoreVersion = '1.2.0-beta01'
+    def androidXTestExtKotlinRunnerVersion = '1.1.1-beta01'
+    def archTestingVersion = '2.0.0'
+    def roomTestingVersion = '2.1.0'
+    androidTestImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomTestingVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espresso_version"
 }

@@ -21,6 +21,7 @@ data class PlayCards(
     var cardIndex : Int
 
     ) {
+
     companion object {
         const val TABLE_NAME = "cards"
     }
