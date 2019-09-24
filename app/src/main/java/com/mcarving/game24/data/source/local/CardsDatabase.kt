@@ -27,11 +27,11 @@ abstract class CardsDatabase : RoomDatabase(){
             var player2 = playCardDao().getPlayCards(PLAYERTWO)
 
 
-            //TODO 9/21/2019 morning @10:30AM
+            //TODO
             // need to use insert() to add row to table
             // then finish the database testing
             // then go for the answer UI with drag and release feature
-            if(player1.cardsInHand.isEmpty() && player2.cardsInHand.isEmpty()) {
+            //if(player1?.cardsInHand?.isEmpty() && player2.cardsInHand.isEmpty()) {
                 beginTransaction()
                 try {
                     // reset card data for the players
@@ -65,16 +65,16 @@ abstract class CardsDatabase : RoomDatabase(){
                 } finally {
                     endTransaction()
                 }
-            } // else, do nothing since there is already data in there
+          //  } // else, do nothing since there is already data in there
 
-            Timber.d("populateInitialData: player1's card # = %d",  player1.cardsInHand.size)
-            Timber.d("populateInitialData: player2's card # = %d", player2.cardsInHand.size)
+            Timber.d("populateInitialData: player1's card # = %d",  player1?.cardsInHand?.size)
+            Timber.d("populateInitialData: player2's card # = %d", player2?.cardsInHand?.size)
         }
     }
 
     companion object {
-        const val PLAYERONE = 0
-        const val PLAYERTWO = 1
+        const val PLAYERONE = 1
+        const val PLAYERTWO = 2
 
         @Volatile
         private var INSTANCE : CardsDatabase? = null
@@ -82,7 +82,7 @@ abstract class CardsDatabase : RoomDatabase(){
         fun getDatabase(context: Context) : CardsDatabase =
             INSTANCE ?: synchronized(this) {
                 INSTANCE ?: buildDatabase(context).also {
-                    it.populateInitialData()
+                   // it.populateInitialData()
                     INSTANCE = it
                 }
             }

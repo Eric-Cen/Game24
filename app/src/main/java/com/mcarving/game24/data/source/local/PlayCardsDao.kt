@@ -1,9 +1,6 @@
 package com.mcarving.game24.data.source.local
 
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.TypeConverters
-import androidx.room.Update
+import androidx.room.*
 import com.mcarving.game24.cards.Card
 import com.mcarving.game24.data.PlayCards
 
@@ -13,7 +10,7 @@ interface PlayCardsDao {
     @TypeConverters(ListConverter::class)
     @Query("SELECT * from " + PlayCards.TABLE_NAME
     + " WHERE id = :playerId")
-    fun getPlayCards(playerId: Int) : PlayCards
+    fun getPlayCards(playerId: Int) : PlayCards?
 
     // Set player's cards in hand
     @TypeConverters(ListConverter::class)
@@ -64,6 +61,7 @@ interface PlayCardsDao {
     /**
      * Insert a playCards into the table.  If the playCard already exists, replace it
      */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(playCards: PlayCards)
 
     /**
