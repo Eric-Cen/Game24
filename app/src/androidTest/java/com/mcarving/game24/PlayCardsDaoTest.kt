@@ -22,23 +22,24 @@ import timber.log.Timber
 import java.io.IOException
 
 
-
 @RunWith(AndroidJUnit4::class)
 class PlayCardsDaoTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var playCardsDao: PlayCardsDao
-    private lateinit var database : CardsDatabase
-    private lateinit var testData : AndroidTestData
+    private lateinit var database: CardsDatabase
+    private lateinit var testData: AndroidTestData
 
     @Before
-    fun createDb(){
+    fun createDb() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
         // Using an in-memory database because the information store here disappears after test
-        database = Room.inMemoryDatabaseBuilder(context,
-            CardsDatabase::class.java)
+        database = Room.inMemoryDatabaseBuilder(
+            context,
+            CardsDatabase::class.java
+        )
             // allowing main thread queries, just for testing
             .allowMainThreadQueries()
             .build()
@@ -49,7 +50,7 @@ class PlayCardsDaoTest {
 
     @After
     @Throws(IOException::class)
-    fun closeDb(){
+    fun closeDb() {
         database.close()
     }
 
@@ -57,64 +58,72 @@ class PlayCardsDaoTest {
     // finish test Dao and create repository
     @Test
     @Throws(IOException::class)
-    fun insertAndGetPlayCards(){
-        val playBefore = playCardsDao.getPlayCards(2)
-        playBefore?.apply { Timber.d("cardsInHand =", cardsInHand.toString()) }
-        playBefore?.apply {Timber.d("twoCards = ",  twoCards.toString() )}
-
-
-        val play2 = testData.playCards2
-        Timber.d(play2.cardsInHand.toString())
-        Timber.d(play2.twoCards.toString())
-        playCardsDao.insert(play2)
-
+    fun insertAndGetPlayCards() {
+        val expectedPlay2 = testData.playCards2
+        Timber.d(expectedPlay2.cardsInHand.toString())
+        Timber.d(expectedPlay2.twoCards.toString())
+        playCardsDao.insert(expectedPlay2)
 
         val playerCards = playCardsDao.getPlayCards(2)
-        playerCards?.apply {Timber.d("cardsInHand = ", cardsInHand.toString())}
-        playerCards?.apply{Timber.d("twoCards = ", twoCards.toString())}
+        playerCards?.apply { Timber.d("after cardsInHand = ", cardsInHand.toString()) }
+        playerCards?.apply { Timber.d("after twoCards = ", twoCards.toString()) }
 
-        assertThat("playCards should be equal", playerCards, equalTo(play2))
+        assertThat("The id should be equal", playerCards?.id, equalTo(expectedPlay2.id))
+        assertThat(
+            "The size of cards should be equal", playerCards?.cardsInHand?.size,
+            equalTo(expectedPlay2.cardsInHand.size)
+        )
 
-
+        assertThat(playerCards?.toString(), equalTo(expectedPlay2.toString()))
     }
 
 
-//    @Test
-//    @Throws(IOException::class)
-//    fun insertAndUpdateCardsInHand(){
-//        playCardsDao.insert(TestData.playCards2)
-//
-//        val cardsInHand = playCardsDao.getPlayCards(2).cardsInHand
-//
-//    }
+    @Test
+    @Throws(IOException::class)
+    fun insertAndUpdateCardsInHand() {
+        playCardsDao.insert(testData.playCards2)
 
-//    @Test
-//    @Throws(IOException::class)
-//    fun insertAndUpdateTwoCards(){
-//        playCardsDao.insert(TestData.playCards2)
-//        val twoCards = playCardsDao.getPlayCards(2).twoCards
-//    }
+        val player2cardsInHand = playCardsDao.getPlayCards(2)?.cardsInHand
+        player2cardsInHand?.add(testData.card1)
+        playCardsDao.setCardsInHand(2, player2cardsInHand!!.toList())
 
-//    @Test
-//    @Throws(IOException::class)
-//    fun insertAndUpdatePlayerTurnStatus(){
-//        playCardsDao.insert(TestData.playCards1)
-//
-//        val status = playCardsDao.getPlayerTurnStatus(1)
-//
-//    }
+        val newCards = playCardsDao.getPlayCards(2)?.cardsInHand
 
-//    @Test
-//    @Throws(IOException::class)
-//    fun insertAndUpdateSelectedCardIndex(){
-//        playCardsDao.insert(TestData.playCards1)
-//        val index = playCardsDao.getSelectedCardIndex(1)
-//
-//    }
+        assertThat(newCards.toString(), equalTo(player2cardsInHand.toString()))
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun insertAndUpdateTwoCards() {
+        playCardsDao.insert(testData.playCards2)
+        val twoCards = playCardsDao.getPlayCards(2)?.twoCards
+        twoCards?.set(1, testData.card1)
+        playCardsDao.setTwoCards(2, twoCards!!.toList())
+
+        val newTwoCards = playCardsDao.getPlayCards(2)?.twoCards
+
+        assertThat(
+            "two cards should be equal", newTwoCards?.toString(),
+            equalTo(twoCards.toString())
+        )
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun insertAndUpdatePlayerTurnStatus() {
+        playCardsDao.insert(testData.playCards1)
+
+        val status = playCardsDao.getPlayerTurnStatus(1)
+        playCardsDao.setPlayerTurnStatus(1, !status)
+        val newStatus = playCardsDao.getPlayerTurnStatus(1)
+
+        assertThat("Turns should be equal", !newStatus, equalTo(testData.playCards1.turn))
+    }
+
 
     @Test
     @Throws(Exception::class)
-    fun deleteAll(){
+    fun deleteAll() {
         playCardsDao.insert(testData.playCards1)
         playCardsDao.insert(testData.playCards2)
 
@@ -123,7 +132,6 @@ class PlayCardsDaoTest {
         val allPlayCards = playCardsDao.getAllPlayCards()
 
         assertTrue(allPlayCards.isEmpty())
-
     }
 
 }

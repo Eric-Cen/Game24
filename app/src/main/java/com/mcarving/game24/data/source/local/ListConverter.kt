@@ -9,7 +9,7 @@ import timber.log.Timber
 class ListConverter {
 
     @TypeConverter
-    fun jsonToList(jsonText : String) : MutableList<Card>{
+    fun jsonToList(jsonText : String) : List<Card>{
         val newList = mutableListOf<Card>()
         val stringList = Gson().fromJson(jsonText, Array<String>::class.java).asList()
 
@@ -22,18 +22,12 @@ class ListConverter {
             }
         }
 
-        //TODO to delete
-        val card1 = Card("♣", "1")
-        val card2 = Card("♣", "2")
-        newList.add(card1)
-        newList.add(card2)
 
-
-        return newList
+        return newList.toList()
     }
 
     @TypeConverter
-    fun listToJson(cards : MutableList<Card>) : String {
+    fun listToJson(cards : List<Card>) : String {
 
         val stringList = arrayListOf<String>()
         cards.forEach {
