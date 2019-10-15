@@ -17,6 +17,8 @@ class GameViewModel : ViewModel() {
     val player_one_pass = MutableLiveData<Boolean>()
     var player_two_pass = MutableLiveData<Boolean>()
 
+    var currentFourCards : List<Card> = emptyList()
+
     // list of poker cards for player 1
     private lateinit var _playerOneCards : MutableList<Card>
     private var _currentPointerOne = -1
@@ -143,7 +145,7 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    fun getFourCards() : List<Card>{
+    fun generateFourCards() : List<Card>{
 
         if(_currentPointerOne == (_playerOneCards.size-1)){
             _playerOneCards = shuffleCards(_playerOneCards)
@@ -168,6 +170,7 @@ class GameViewModel : ViewModel() {
 
         }
 
+        currentFourCards = tempList.toList()
         return tempList
     }
 

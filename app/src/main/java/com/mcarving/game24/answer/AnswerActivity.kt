@@ -18,12 +18,14 @@ class AnswerActivity : AppCompatActivity() {
     fun setupPlayerName(){
 
         val playerName = intent.getStringExtra(EXTRA_PLAYER_NAME)
-        tv_player_name.text = "Player, $playerName's turn to anwer"
+        //tv_player_name.text = "Player, $playerName's turn to answer"
+        tv_answer.text = "$playerName's answer = ?"
 
     }
 
     companion object {
         val EXTRA_PLAYER_NAME = "player's name"
+        val EXTRA_FOUR_CARDS = "four cards"
 
     }
 }

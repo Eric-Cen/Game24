@@ -1,12 +1,14 @@
 package com.mcarving.game24.cards
 
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 
 /**
  *Poker card class
  */
-
-class Card constructor(val suit: String, val value: String){
+//TODO 10/14/2019, implement parcelable for Card class
+class Card constructor(val suit: String, val value: String) : Parcelable {
     val cornerLabel: String
         get() = value + "\n" + suit
 
@@ -19,6 +21,20 @@ class Card constructor(val suit: String, val value: String){
     override fun toString(): String {
         return "$value $suit"
     }
+
+    private constructor(parcel : Parcel) : this(
+        suit = parcel.readString(),
+        value = parcel.readString()
+    )
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.apply {
+            writeString(suit)
+            writeString(value)
+        }
+    }
+
+    override fun describeContents(): = 0
 
     companion object {
         internal val ARGS_BUNDLE = Card::class.java.name + ":Bundle"
@@ -33,6 +49,15 @@ class Card constructor(val suit: String, val value: String){
         fun fromBundle(bundle: Bundle): Card{
             val spec = bundle.getStringArray(ARGS_BUNDLE)
             return Card(spec!![0], spec[1])
+        }
+
+        @JvmField
+        val CREATOR = object : Parcelable.Creator<Card> {
+            override fun createFromParcel(source: Parcel?): Card {
+                source?.let { Card(it) }
+            }
+
+            override fun newArray(size: Int): Array<Card> = arrayOfNulls<Card>(size)
         }
     }
 }

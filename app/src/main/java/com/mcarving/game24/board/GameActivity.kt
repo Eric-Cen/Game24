@@ -32,14 +32,14 @@ class GameActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this)
             .get(GameViewModel::class.java)
 
-        displayFourCards(viewModel.getFourCards())
+        displayFourCards(viewModel.generateFourCards())
 
         btn_answer1.setOnClickListener {
-            startAnswerActivity(_nameOne)
+            startAnswerActivity(_nameOne, viewModel.currentFourCards)
         }
 
         btn_answer2.setOnClickListener {
-            startAnswerActivity(_nameTwo)
+            startAnswerActivity(_nameTwo, viewModel.currentFourCards)
         }
 
         btn_pass1.setOnClickListener {
@@ -82,7 +82,7 @@ class GameActivity : AppCompatActivity() {
         ) {
             //setPassButtonText("2/2 Passes")
 
-            displayFourCards(viewModel.getFourCards())
+            displayFourCards(viewModel.generateFourCards())
 
             setPassButtonText("0/2 Pass")
             hideTimerButtonText()
@@ -120,10 +120,11 @@ class GameActivity : AppCompatActivity() {
         tv_player1_timer?.visibility = View.GONE
     }
 
-    fun startAnswerActivity(playerName: String) {
+    fun startAnswerActivity(playerName: String, fourCards : List<Card>) {
 
         val intent = Intent(this, AnswerActivity::class.java).apply {
             putExtra(AnswerActivity.EXTRA_PLAYER_NAME, playerName)
+            putExtra(AnswerActivity.EXTRA_FOUR_CARDS, fourCards)
         }
 
         startActivity(intent)

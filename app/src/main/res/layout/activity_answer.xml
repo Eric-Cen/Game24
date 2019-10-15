@@ -1,72 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/layout_answer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#f5f5f5"
-        android:padding="16dp"
-        tools:context="com.mcarving.game24.answer.AnswerActivity"
-        >
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
 
     <include layout="@layout/answer_progress_bar"
-             android:id="@+id/progress_bar_answer"
-             app:layout_constraintTop_toTopOf="parent"
-             app:layout_constraintStart_toStartOf="parent"
-    />
+        android:id="@+id/progress_bar_answer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <TextView
+        android:id="@+id/tv_time_remaining"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="30 seconds"
+        android:textAlignment="textEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_bar_answer" />
 
     <TextView
-            android:id="@+id/tv_player_name"
+        android:id="@+id/tv_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Player 1's answer = ?"
+        android:textSize="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time_remaining" />
+
+    <HorizontalScrollView
+        android:id="@+id/chipGroup1HorizontalView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_answer"
+        app:layout_constraintVertical_bias="0.62">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup1"
             android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup1HorizontalView" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/progress_bar_answer"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:text="Player's Name"
-    />
-    <TextView
-            android:id="@+id/tv_equation"
-            android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Enter equation to get 24:"
-            app:layout_constraintTop_toBottomOf="@+id/tv_player_name"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-    />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp">
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_plus"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="@string/addition_sign"
+                android:textAlignment="center" />
 
-    <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_answer"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            app:singleLine="false"
-            android:text="hello world"
-            app:layout_constraintTop_toBottomOf="@+id/tv_equation"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-    />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_minus"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="@string/minus_sign"
+                android:textAlignment="center" />
 
-    <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_choices"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            app:singleLine="false"
-            android:text="hello world"
-            app:layout_constraintTop_toBottomOf="@+id/chip_group_answer"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="32dp"
-    />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_multiply"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="@string/multiplication_sign"
+                android:textAlignment="center" />
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_divide"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="@string/division_sign"
+                android:textAlignment="center" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_left_parenthesis"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="@string/left_parenthesis"
+                android:textAlignment="center" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_right_parenthese"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="@string/right_parenthese"
+                android:textAlignment="center" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_card1"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="card 1"
+                android:textAlignment="center" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_card2"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="card 2"
+                android:textAlignment="center" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_card3"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="card 3"
+                android:textAlignment="center" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_card4"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:text="card 4"
+                android:textAlignment="center" />
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
 
     <Button
-            android:id="@+id/btn_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="check"
-            app:layout_constraintBottom_toBottomOf="parent"
-    />
+        android:id="@+id/bt_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

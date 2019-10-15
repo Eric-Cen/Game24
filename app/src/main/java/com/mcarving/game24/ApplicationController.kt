@@ -10,6 +10,8 @@ class ApplicationController : Application() {
         if(BuildConfig.DEBUG){
             Timber.plant(Timber.DebugTree())
         }
+
+        Timber.i("BuildConfig.VERSION_NAME=%s, VERSION_CODE=%d", BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
     }
 
 }
