@@ -32,22 +32,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_time_remaining" />
 
-    <HorizontalScrollView
-        android:id="@+id/chipGroup1HorizontalView"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_answer"
-        app:layout_constraintVertical_bias="0.62">
+        app:singleLine="false"
+        />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-        </com.google.android.material.chip.ChipGroup>
-    </HorizontalScrollView>
+
 
     <View
         android:id="@+id/divider1"
@@ -57,7 +52,7 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup1HorizontalView" />
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup1" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -89,7 +84,9 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="@string/addition_sign"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:tag="@string/addition_sign"
+                />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_minus"
@@ -97,6 +94,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="@string/minus_sign"
+                android:tag="@string/minus_sign"
                 android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
@@ -105,6 +103,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="@string/multiplication_sign"
+                android:tag="@string/multiplication_sign"
                 android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
@@ -113,6 +112,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="@string/division_sign"
+                android:tag="@string/division_sign"
                 android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
@@ -121,6 +121,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="@string/left_parenthesis"
+                android:tag="@string/left_parenthesis"
                 android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
@@ -129,6 +130,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:text="@string/right_parenthese"
+                android:tag="@string/right_parenthese"
                 android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip

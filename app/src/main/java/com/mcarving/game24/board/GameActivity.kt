@@ -35,11 +35,11 @@ class GameActivity : AppCompatActivity() {
         displayFourCards(viewModel.generateFourCards())
 
         btn_answer1.setOnClickListener {
-            startAnswerActivity(_nameOne, viewModel.currentFourCards)
+            startAnswerActivity(_nameOne, ArrayList(viewModel.currentFourCards))
         }
 
         btn_answer2.setOnClickListener {
-            startAnswerActivity(_nameTwo, viewModel.currentFourCards)
+            startAnswerActivity(_nameTwo, ArrayList(viewModel.currentFourCards))
         }
 
         btn_pass1.setOnClickListener {
@@ -120,11 +120,12 @@ class GameActivity : AppCompatActivity() {
         tv_player1_timer?.visibility = View.GONE
     }
 
-    fun startAnswerActivity(playerName: String, fourCards : List<Card>) {
+    fun startAnswerActivity(playerName: String, fourCards : ArrayList<Card>) {
 
         val intent = Intent(this, AnswerActivity::class.java).apply {
             putExtra(AnswerActivity.EXTRA_PLAYER_NAME, playerName)
-            putExtra(AnswerActivity.EXTRA_FOUR_CARDS, fourCards)
+           // putExtra(AnswerActivity.EXTRA_FOUR_CARDS, fourCards)
+            putParcelableArrayListExtra(AnswerActivity.EXTRA_FOUR_CARDS, fourCards)
         }
 
         startActivity(intent)

@@ -34,7 +34,7 @@ class Card constructor(val suit: String, val value: String) : Parcelable {
         }
     }
 
-    override fun describeContents(): = 0
+    override fun describeContents() = 0
 
     companion object {
         internal val ARGS_BUNDLE = Card::class.java.name + ":Bundle"
@@ -53,11 +53,11 @@ class Card constructor(val suit: String, val value: String) : Parcelable {
 
         @JvmField
         val CREATOR = object : Parcelable.Creator<Card> {
-            override fun createFromParcel(source: Parcel?): Card {
-                source?.let { Card(it) }
+            override fun createFromParcel(source: Parcel): Card {
+                return Card(source)
             }
 
-            override fun newArray(size: Int): Array<Card> = arrayOfNulls<Card>(size)
+            override fun newArray(size: Int): Array<Card?> = arrayOfNulls<Card>(size)
         }
     }
 }
