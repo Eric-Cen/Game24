@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.mcarving.game24.Player
 import com.mcarving.game24.R
@@ -29,8 +30,10 @@ class GameActivity : AppCompatActivity() {
 
         setupPlayerNames()
 
-        val viewModel = ViewModelProviders.of(this)
-            .get(GameViewModel::class.java)
+//        val viewModel = ViewModelProviders.of(this)
+//            .get(GameViewModel::class.java)
+
+        val viewModel = ViewModelProvider.NewInstanceFactory().create(GameViewModel::class.java)
 
         displayFourCards(viewModel.generateFourCards())
 

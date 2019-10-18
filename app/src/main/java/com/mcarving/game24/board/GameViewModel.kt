@@ -15,7 +15,7 @@ class GameViewModel : ViewModel() {
     val TAG = "GameViewModel"
 
     val player_one_pass = MutableLiveData<Boolean>()
-    var player_two_pass = MutableLiveData<Boolean>()
+    val player_two_pass = MutableLiveData<Boolean>()
 
     var currentFourCards : List<Card> = emptyList()
 

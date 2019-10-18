@@ -5,4 +5,9 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="blue_300">#7BAAF7</color>
+
+    <color name="color_bg_checked">#B7D9D6</color>
+    <color name="color_bg_unchecked">#E0DFE0</color>
+    <color name="color_text_unchecked">#2C2B2C</color>
+    <color name="color_text_checked">#417E78</color>
 </resources>
