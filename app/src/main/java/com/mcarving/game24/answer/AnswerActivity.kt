@@ -14,6 +14,7 @@ import com.mcarving.game24.cards.Card
 import kotlinx.android.synthetic.main.activity_answer.*
 import kotlinx.android.synthetic.main.activity_answer.view.*
 import timber.log.Timber
+import java.util.*
 
 class AnswerActivity : AppCompatActivity() {
 
@@ -34,7 +35,23 @@ class AnswerActivity : AppCompatActivity() {
 
         val countObserver = Observer<Int>{
             Timber.d("chip size = $it")
-            tv_show_calc.text = getMathmaticalExpression(chipGroup1)
+            val mathExpression = getMathmaticalExpression(chipGroup1)
+            if(mathExpression.isNotEmpty()) {
+                tv_show_calc.text = mathExpression
+
+
+                // if yes, should math result
+
+                //determine if math expression is valid
+                val bValue = isProperExpression(mathExpression)
+                Timber.d("proper format = $bValue")
+
+                if (bValue) {
+                    tv_answer.text = evaluate(mathExpression)
+                }
+
+            }
+
         }
 
         _viewModel.chipCount.observe(this, countObserver)
@@ -43,7 +60,7 @@ class AnswerActivity : AppCompatActivity() {
     fun setup(){
         val playerName = intent.getStringExtra(EXTRA_PLAYER_NAME)
         //tv_player_name.text = "Player, $playerName's turn to answer"
-        tv_answer.text = "$playerName's answer = ?"
+        tv_player_answer.text = "$playerName's answer = ?"
 
         val fourCards = intent.getParcelableArrayListExtra<Card>(EXTRA_FOUR_CARDS)
         chip_card1.text = fourCards[0].toString()
@@ -131,22 +148,23 @@ class AnswerActivity : AppCompatActivity() {
         for(i in 0 until chipGroup.childCount){
             val childStr = chipGroup.getChildAt(i).tag as String
 
-            var strToAdd = ""
+            var strToAdd : String
 
             if(childStr[0] == '1' && childStr[1] == '0'){
                 strToAdd = "10"
-            }
-            strToAdd = when (childStr[0]){
-                'K', 'Q', 'J' -> "10"
-                '9', '8', '7', '6', '5', '4', '3', '2' -> childStr[0].toString()
-                'A' -> "1"
-                '(' -> "("
-                ')' -> ")"
-                '+' -> "+"
-                '-' -> "-" // doesn't work
-                // divide
-                // multiply
-                else -> ""
+            } else {
+                strToAdd = when (childStr[0]) {
+                    'K', 'Q', 'J' -> "10"
+                    '9', '8', '7', '6', '5', '4', '3', '2' -> childStr[0].toString()
+                    'A' -> "1"
+                    '(' -> "("
+                    ')' -> ")"
+                    '+' -> "+"
+                    '−' -> "−"
+                    '×'  -> "×"
+                    '÷'  -> "÷"
+                    else -> ""
+                }
             }
             strVal += strToAdd
 
@@ -155,6 +173,67 @@ class AnswerActivity : AppCompatActivity() {
 
         return strVal
 
+    }
+
+    private fun evaluate(expressions : String) : String {
+        var finalStr : String = "Player's answer = ??"
+
+        var ops = Stack<String>() // operations
+        var vals = Stack<Double>() // digits
+
+        // remove all white spaces from expressions
+//        val expr = expressions.replace("\\s".toRegex(), "")
+
+        val delimiter = " "
+        val parts = expressions.split(delimiter)
+        for (i in 0 until parts.size){
+            val temp = parts[i]
+            if(temp.equals("(")) {}// do nothing
+            else if(temp.equals("+"))  ops.push(temp)
+            else if(temp.equals("−"))  ops.push(temp)
+            else if(temp.equals("×"))  ops.push(temp)
+            else if(temp.equals("÷"))  ops.push(temp)
+            else if(temp.equals(")")){
+                val op = ops.pop()
+                var v = vals.pop()
+
+                if(op.equals("+"))  v = vals.pop() + v
+                else if(op.equals("−")) v = vals.pop() - v
+                else if(op.equals("×")) v = vals.pop() * v
+                else if(op.equals("÷")) v = vals.pop() / v
+
+                vals.push(v)
+            }
+            else vals.push(temp.toDouble() ?: 0.toString)
+
+            Timber.d("\nstr[$i] = " + parts[i])
+        }
+
+        val returnVal = vals.pop()
+        finalStr = returnVal.toString()
+
+        return finalStr
+    }
+    
+    private fun isProperExpression(inputString : String) : Boolean {
+        val expr = inputString.replace("[^()]".toRegex(), "")
+
+        val arr = expr.toCharArray()
+
+        val stack = Stack<Char>()
+        for(i in 0 until arr.size){
+            try{
+                if(arr[i] == '('){
+                    stack.push(arr[i])
+                } else {
+                    stack.pop()
+                }
+            } catch(e : EmptyStackException){
+                stack.push(arr[i])
+            }
+        }
+
+        return stack.isEmpty()
     }
 
 

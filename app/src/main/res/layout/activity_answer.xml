@@ -23,22 +23,33 @@
         app:layout_constraintTop_toBottomOf="@id/progress_bar_answer" />
 
     <TextView
+        android:id="@+id/tv_player_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Player 1's answer = "
+        android:textSize="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time_remaining" />
+    <TextView
         android:id="@+id/tv_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Player 1's answer = ?"
+        android:text="?"
         android:textSize="28dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_player_answer"
         app:layout_constraintTop_toBottomOf="@+id/tv_time_remaining" />
     <TextView
         android:id="@+id/tv_show_calc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_answer"
+        app:layout_constraintTop_toBottomOf="@+id/tv_player_answer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
         />
 
     <com.google.android.material.chip.ChipGroup
