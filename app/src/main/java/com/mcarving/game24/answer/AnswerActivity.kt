@@ -229,13 +229,14 @@ class AnswerActivity : AppCompatActivity() {
             lateinit var op : String
             lateinit var ex : String
 
-            val prec = 3
+            var prec = 3
 
-            Expression(e : String){
+            constructor(e : String) : this{
                 ex = e
             }
 
-            Epression(e1 : String, e2 : String, o : String){
+            constructor(e1 : String, e2 : String, o : String) : this@Expression(){
+
                 ex = String.format("%s %s %s", e1, o, e2)
                 op = o
                 prec = OPS.indexOf(o) / 2
